@@ -1,7 +1,37 @@
 <!DOCTYPE html>
 <html>
-<body style="background:black;color:white;text-align:center;font-family:Arial;">
-<h1>New GitHub Repo Working ✅</h1>
-<p>Deployment successful.</p>
+<head>
+  <title>Fintech Firebase Test</title>
+</head>
+
+<body style="background:#0f172a;color:white;text-align:center;font-family:Arial;">
+
+<h1>Firebase Fintech App</h1>
+<p id="status">Connecting Firebase...</p>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID"
+};
+
+try {
+  const app = initializeApp(firebaseConfig);
+
+  document.getElementById("status").innerText =
+    "Firebase Connected ✅";
+
+} catch(error) {
+  document.getElementById("status").innerText =
+    "Firebase Failed ❌: " + error.message;
+}
+
+</script>
+
 </body>
 </html>
