@@ -9,29 +9,84 @@
 <h1>Firebase Fintech App</h1>
 <p id="status">Connecting Firebase...</p>
 
-<script type="module">
+  <script type="module">
 
+// Firebase core
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 
+// AUTH (login/register)
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
+// FIRESTORE (database)
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+// ANALYTICS (optional)
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
+
+// 🔥 YOUR CONFIG (KEEP THIS EXACT)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyB20bVYVMK-IhfuCDRkXsgLa6NYeviGXYc",
+  authDomain: "my-app-4d173.firebaseapp.com",
+  projectId: "my-app-4d173",
+  storageBucket: "my-app-4d173.appspot.com",
+  messagingSenderId: "773439981351",
+  appId: "1:773439981351:web:459bde641a0d2a67ef0b02",
+  measurementId: "G-EJFG18HJXY"
 };
 
-try {
-  const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
-  document.getElementById("status").innerText =
-    "Firebase Connected ✅";
+// ================= DEBUG CHECK =================
+console.log("Firebase Loaded Successfully 🚀");
 
-} catch(error) {
-  document.getElementById("status").innerText =
-    "Firebase Failed ❌: " + error.message;
+// ================= AUTH FUNCTIONS =================
+window.register = async function(email, password){
+  const user = await createUserWithEmailAndPassword(auth, email, password);
+
+  await setDoc(doc(db, "users", user.user.uid), {
+    email: email,
+    balance: 200,
+    createdAt: new Date()
+  });
+
+  alert("Account created 🚀");
 }
 
-</script>
+window.login = async function(email, password){
+  const user = await signInWithEmailAndPassword(auth, email, password);
+  alert("Login successful ✅ " + user.user.email);
+}
+
+window.logout = function(){
+  signOut(auth);
+}
+
+// ================= AUTO LOGIN CHECK =================
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    console.log("User logged in:", user.email);
+  } else {
+    console.log("No user logged in");
+  }
+});
+
+  </script>
+
 
 </body>
 </html>
