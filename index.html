@@ -6,8 +6,29 @@
 
 <body style="background:#0f172a;color:white;text-align:center;font-family:Arial;">
 
-<h1>Firebase Fintech App</h1>
-<p id="status">Connecting Firebase...</p>
+<h1>Fintech App</h1>
+
+<div>
+  <h2>Register</h2>
+  <input id="regEmail" placeholder="Email"><br><br>
+  <input id="regPass" type="password" placeholder="Password"><br><br>
+  <button onclick="registerUser()">Register</button>
+</div>
+
+<hr>
+
+<div>
+  <h2>Login</h2>
+  <input id="loginEmail" placeholder="Email"><br><br>
+  <input id="loginPass" type="password" placeholder="Password"><br><br>
+  <button onclick="loginUser()">Login</button>
+</div>
+
+<hr>
+
+<h3 id="status">Not logged in</h3>
+
+</body>
 
   <script type="module">
 
